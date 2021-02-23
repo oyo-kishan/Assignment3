@@ -1,20 +1,46 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import {StyleSheet, Animated, KeyboardAvoidingView} from 'react-native';
+
+import {useDispatch,useSelector} from 'react-redux';
+import addMovies from '../actions/AddMovie';
 
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Input from '../components/Input';
 
 
+const data = [
+    {label: 'Action', value: 'Action'},
+    {label: 'Comedy', value: 'Comedy'},
+    {label: 'Drama',  value: 'Drama'},
+  ];
+
 const AddMovie=()=>{
 
-    const data = [
-        {label: 'Action', value: 'Action'},
-        {label: 'Comedy', value: 'Comedy'},
-        {label: 'Drama',  value: 'Drama'},
-      ];
-      const buttonAnimatedValue=new Animated.Value(1);
-      const animatedStyle={
+    // const dispatch=useDispatch();
+    // const [redata,setData]=useState(useSelector((state) => state.movieData.movies));
+
+    const [movieName,setMovieName]=useState("");
+    const [movieYear,setMovieYear]=useState("");
+    const [movieDescription,setMovieDescription]=useState("");
+    const [movieRating,setMovieRating]=useState("");
+    const [movieGenre,setMovieGenre]=useState("Action");
+    const buttonAnimatedValue=new Animated.Value(1);
+
+    const addDataToStore=()=>{
+        // dispatch(addMovies(
+        // {
+        //     name: movieName,
+        //     year: movieYear,
+        //     genre: movieGenre,
+        //     description: movieDescription,
+        //     rating: movieRating,
+        //     id:  movieName.toString().concat(movieRating).concat(movieGenre.toString())
+        // }));
+        
+    }
+
+    const animatedStyle={
           transform:[
               {
                   scale:buttonAnimatedValue
@@ -22,7 +48,7 @@ const AddMovie=()=>{
           ]
       }
 
-      const onPressIn=()=>{
+    const onPressIn=()=>{
           Animated.spring(buttonAnimatedValue,{
               toValue:.5,
               friction:2,
@@ -47,32 +73,33 @@ const AddMovie=()=>{
         >
                 <Input
                     placeholder="Movie Name"
-                    onChangeText={(txt)=>{console.log(txt)}}
+                    onChangeText={(name)=>setMovieName(name)}
                     type="text"
                 />
                 <Input
                     placeholder="Movie Year"
-                    onChangeText={(txt)=>{console.log(txt)}}
+                    onChangeText={(year)=>setMovieYear(year)}
                     type="number"
                 />
                 <Input
                     placeholder="Description"
-                    onChangeText={(txt)=>{console.log(txt)}}
+                    onChangeText={(description)=>setMovieDescription(description)}
                     type="text"
                 />
                 <Input
                     placeholder="Rating"
-                    onChangeText={(txt)=>{console.log(txt)}}
+                    onChangeText={(rating)=>setMovieRating(rating)}
                     type="number"
                 />
                 <DropDownPicker
                     items={data}
                     defaultValue="Action"
                     containerStyle={styles.dropdown}
-                    onChangeItem={(item) =>console.log(item)}   
+                    onChangeItem={(item) =>setMovieGenre(item.value)}   
                 />
                 <CustomButton
                     style={styles.button}
+                    onPress={()=>{addDataToStore()}}
                     onPressIn={()=>onPressIn()}
                     onPressOut={()=>onPressOut()}
                     title="Click me"
@@ -82,7 +109,6 @@ const AddMovie=()=>{
         
     )
 }
-
 
 
 const styles=StyleSheet.create({
@@ -97,6 +123,10 @@ const styles=StyleSheet.create({
         width:"90%",
         marginBottom:120,
     }
-})
+});
+
+
+
+
 
 export default AddMovie;

@@ -5,9 +5,9 @@ import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
 
 import { Provider } from 'react-redux';
 import allReducer from './reducers/RootReducer';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import {logger} from 'redux-logger';
+import { createStore ,applyMiddleware} from 'redux';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+// import {logger} from 'redux-logger';
 
 import AddMovie from './screens/AddMovie';
 import MovieList from './screens/MovieList';
@@ -15,12 +15,11 @@ import FetchUser from './screens/FetchUser';
 
 
 const Tab = createBottomTabNavigator();
-const store = createStore(allReducer,composeWithDevTools(applyMiddleware(logger)));
+const store = createStore(allReducer);
 
 
 const App=()=>{
-
-
+  
   return (
     <Provider store={store}>
       <NavigationContainer>

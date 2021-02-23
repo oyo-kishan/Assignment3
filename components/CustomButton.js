@@ -6,6 +6,7 @@ const CustomButton=(props)=>{
         <Animated.View style={props.animatedStyle}>
             <TouchableOpacity 
                style={styles.button}
+               onPress={()=>props.onPress()}
                onPressIn={()=>{props.onPressIn()}}
                onPressOut={()=>{props.onPressOut()}}>
              <Text style={styles.buttonTitle}>{props.title}</Text>

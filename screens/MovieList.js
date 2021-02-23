@@ -1,13 +1,19 @@
-import React from 'react';
-import {Text,View,Button,StyleSheet} from 'react-native';
+import React ,{useState} from 'react';
+import {View,StyleSheet,FlatList,Text} from 'react-native';
 
+import {useSelector} from 'react-redux';
+import ListItem from '../components/ListItem';
 
 const MovieList=()=>{
-    return (
+    const data=useState(useSelector((state) => state.movieData.movies))[0];
+
+     return (
         <View style={styles.root}>
-            <Button
-              onPress={()=>navigation.navigate("FetchUser")}
-              title="Movie list"
+            <FlatList
+               style={styles.list}
+               data={data}
+               keyExtractor={(item)=>item.id}
+               renderItem={({item})=><ListItem data={item}/>}
             />
         </View>
     )
@@ -18,6 +24,10 @@ const styles=StyleSheet.create({
         flex : 1,
         justifyContent:'center',
         alignItems:'center'
+    },
+    list:{
+        flex : 1,
+        width:"95%",
     }
 })
 
