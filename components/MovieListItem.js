@@ -3,7 +3,7 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const MovieListItem = (props) => {
   const data = props.data;
-
+  console.log(data);
   return (
     <TouchableOpacity>
       <View style={styles.root}>
@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     justifyContent: 'flex-start',
-    marginTop: 8,
-    borderRadius: 5,
-    elevation: 3,
   },
   firstsubroot: {
     flex: 2,

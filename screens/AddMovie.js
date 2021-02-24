@@ -1,8 +1,9 @@
 import React ,{useState}from 'react';
-import {StyleSheet, Animated, KeyboardAvoidingView, Alert} from 'react-native';
+import {StyleSheet, Animated, KeyboardAvoidingView, Alert, ScrollView} from 'react-native';
 
 import {useDispatch,useSelector} from 'react-redux';
 import addMovies from '../actions/AddMovie';
+
 
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -51,7 +52,6 @@ const AddMovie=()=>{
             rating: movieRating,
             id:  movieName.toString().concat(movieRating).concat(movieGenre.toString())
         }));
-        console.log("Action dispatched");
         alert("Action dispatched");
     }
 

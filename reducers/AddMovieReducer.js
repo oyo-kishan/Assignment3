@@ -7,21 +7,6 @@ const initialState={
         description: "Dark comedy (or Black Comedy) is defined by using attitudes",
         rating : "9",
         id:  "ididididid"
-    },
-    {
-        name : "Dark Comedy (Black Comedy)",
-        year : "1998",
-        genre: "Comedy",
-        description: "Dark comedy (or Black Comedy) is defined by using attitudes",
-        rating : "9",
-        id:  "idididiid1"
-    },{
-        name : "Dark Comedy (Black Comedy)",
-        year : "1998",
-        genre: "Comedy",
-        description: "Dark comedy (or Black Comedy) is defined by using attitudes",
-        rating : "9",
-        id:  "ididididid2"
     }
 ]
 }

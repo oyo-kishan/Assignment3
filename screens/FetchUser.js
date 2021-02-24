@@ -2,14 +2,14 @@ import React ,{useState,useEffect}from 'react';
 import {
   Text,
   View,
-  Button,
   StyleSheet,
-  FlatList,
-  Dimensions,
   TextInput,
   TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import Table from '../components/Table';
+
 
 
 
@@ -72,6 +72,20 @@ const FetchUser = () => {
   },[filterText,data]);
 
 
+    const sortDataByName=()=>{
+        const copy=[...data].sort((item1,item2)=>{
+            return item1.name.toLowerCase().localeCompare(item2.name.toLowerCase());
+        });
+        setData(copy);
+    }
+
+    const sortDataByEmail=()=>{
+        const copy=[...data].sort((item1,item2)=>{
+            return item1.email.toLowerCase().localeCompare(item2.email.toLowerCase());
+        })
+        setData(copy);
+    }
+
     const onPrevPressed=()=>{
         if(page<=1)return;
         setPage((page)=>page-1);
@@ -83,7 +97,8 @@ const FetchUser = () => {
     }
 
  return (
-        <View style={styles.root}>
+         <ScrollView nestedScrollEnabled>
+          <View style={styles.root}>
             <TextInput
                 style={styles.searchInput}
                 onChangeText={(text)=>{setFilterText(text)}}
@@ -95,9 +110,11 @@ const FetchUser = () => {
             <Table
                 heading={["Name","Email","Status"]}
                 data={filterData}
+                sortByName={()=>{sortDataByName()}}
+                sortByEmail={()=>{sortDataByEmail()}}
             />
 
-            <View style={styles.paginationView}>
+            {loading && <View style={styles.paginationView}>
                <TouchableOpacity 
                     onPress={()=>onPrevPressed()} 
                     style={[styles.paginationButton]}>
@@ -109,9 +126,11 @@ const FetchUser = () => {
                     style={styles.paginationButton}>
                     <Text style={styles.paginationButtonText}>Next</Text>
                 </TouchableOpacity>
-            </View>
+            </View>}
         </View>
-        )
+     </ScrollView>     
+       
+    )
 };
 
 

@@ -1,6 +1,8 @@
 import React from 'react';
-import {View,Text,FlatList,StyleSheet,Dimensions} from 'react-native';
+import {View,Text,FlatList,StyleSheet,Dimensions, TouchableOpacity} from 'react-native';
 import UserListItem from './UserListItem';
+import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
+
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -17,17 +19,28 @@ const Table = (props) => {
 
       <View style={styles.tableHeading}>
 
-        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.text}>
-          {heading[0]}
-        </Text>
+        <TouchableOpacity  
+            onPress={()=>{props.sortByName()}}
+            style={styles.sortButton}>
+            <Text style={styles.text} >{heading[0]}</Text>
+            <FontAwesome5 name="sort" size={18} color="#000000"/>
+        </TouchableOpacity>
 
-        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.text}>
-          {heading[1]}
-        </Text>
+        <TouchableOpacity 
+          onPress={()=>{props.sortByEmail()}}
+          style={styles.sortButton}>
+           <Text style={styles.text}>{heading[1]}</Text>
+           <FontAwesome5 name="sort" size={18} color="#000000"/>
+        </TouchableOpacity>
+        
+        
+        <TouchableOpacity style={styles.sortButton}>
+           <Text style={styles.text}>{heading[2]}</Text>
+        </TouchableOpacity>
 
-        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.text}>
-          {heading[2]}
-        </Text>
+        
+
+       
 
       </View>
 
@@ -38,6 +51,7 @@ const Table = (props) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => <UserListItem data={item} />}
         ItemSeparatorComponent={(item) => (<View style={styles.seperator}></View>)}
+        getItemLayout={(data,index)=>({length:50,offset:50*index,index})}
       />
     </View>
   );
@@ -61,13 +75,18 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    sortButton:{
+      flex : 1,
+      flexDirection:'row',
+      width:windowWidth/3,
+      height:"100%",
+      justifyContent:'center',
+      alignItems:'center'
+    },
     text: {
-      width: windowWidth / 3,
-      textAlign:'center',
-      paddingLeft: 4,
-      paddingRight: 4,
       fontWeight: 'bold',
       fontSize: 18,
+      paddingRight:5
     },
   });
 
