@@ -1,19 +1,19 @@
 import React ,{useState} from 'react';
-import {View,StyleSheet,FlatList,Text} from 'react-native';
+import {View,StyleSheet,FlatList} from 'react-native';
 
 import {useSelector} from 'react-redux';
-import ListItem from '../components/ListItem';
+import MovieListItem from '../components/MovieListItem';
 
 const MovieList=()=>{
     const data=useState(useSelector((state) => state.movieData.movies))[0];
-
+    
      return (
         <View style={styles.root}>
             <FlatList
                style={styles.list}
                data={data}
                keyExtractor={(item)=>item.id}
-               renderItem={({item})=><ListItem data={item}/>}
+               renderItem={(item)=><MovieListItem data={item}/>}
             />
         </View>
     )

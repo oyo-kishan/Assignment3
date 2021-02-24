@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
-const ListItem = (props) => {
+const MovieListItem = (props) => {
   const data = props.data;
 
   return (
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItem;
+export default MovieListItem;
