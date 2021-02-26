@@ -12,7 +12,6 @@ import Table from '../components/Table';
 
 
 
-
 const url = 'https://gorest.co.in/public-api/users/?page=';
 const axios = require('axios');
 
@@ -114,7 +113,7 @@ const FetchUser = () => {
                 sortByEmail={()=>{sortDataByEmail()}}
             />
 
-            {loading && <View style={styles.paginationView}>
+            {!loading && <View style={styles.paginationView}>
                <TouchableOpacity 
                     onPress={()=>onPrevPressed()} 
                     style={[styles.paginationButton]}>
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   searchInput:{
-      width:'70%',
+      width:'90%',
       height:45,
       borderRadius:8,
       paddingLeft:16,

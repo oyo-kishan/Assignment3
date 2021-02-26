@@ -7,7 +7,7 @@ import MovieListItem from '../components/MovieListItem';
 
 const MovieList=()=>{
 
-    const [data,setData]=useState(useSelector((state) => state.movieData.movies));
+    const data=useSelector(state => state.movieData.movies);
     
      return (
         <View style={styles.root}>
