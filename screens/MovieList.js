@@ -1,26 +1,71 @@
 import React ,{useState} from 'react';
-import { useEffect } from 'react';
-import {View,StyleSheet,FlatList} from 'react-native';
+import {View,StyleSheet,FlatList,Modal} from 'react-native';
 
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import MovieListItem from '../components/MovieListItem';
+import CustomModal from '../components/CustomModal'
+import deleteMovies from '../actions/DeleteMovie';
 
-const MovieList=()=>{
+const MovieList=({navigation})=>{
 
-    const data=useSelector(state => state.movieData.movies);
+    const dispatch=useDispatch();
+    let data=useSelector(state => state.movieData.movies);
+    const [modalVisible,setModalVisible]=useState(false);
+    const [selectedIndex,setSelectedIndex]=useState(-1);
+
+    const onMovieItemClicked=(index)=>{
+       setSelectedIndex(index);
+       setModalVisible(true);
+    }
+
+    const editItem=()=>{
+        setModalVisible(false);
+        navigation.navigate("AddMovie",data[selectedIndex]);
+    }
+
+    const deleteItem=()=>{
+        setModalVisible(false);
+        dispatch(deleteMovies(data[selectedIndex].id));
+    }
+
     
      return (
         <View style={styles.root}>
+            <Modal
+              visible={modalVisible}
+              animationType='fade'
+              hardwareAccelerated={true}
+              transparent={true}
+              onRequestClose={()=>{setModalVisible(false)}}>
+
+              <CustomModal
+                 onEditClicked={()=>{editItem()}}
+                 onDeleteClicked={()=>{deleteItem()}}
+                 onNoneClicked={()=>{setModalVisible(false)}}
+              />
+            </Modal>
+
             <FlatList
                style={styles.list}
                data={data}
                keyExtractor={(item)=>item.id}
-               renderItem={({item})=><MovieListItem data={item}/>}
+               renderItem={({item,index})=>{
+                   return <MovieListItem  
+                       data={item}
+                       index={index}
+                       onPress={(index)=>onMovieItemClicked(index)}/>
+                    }
+                }
                ItemSeparatorComponent={(item) => (<View style={styles.seperator}></View>)}
             />
         </View>
     )
 }
+
+
+
+
+
 
 const styles=StyleSheet.create({
     root:{

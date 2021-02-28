@@ -6,6 +6,7 @@ export default class CustomInput extends React.Component{
     render(){
         return (
              <TextInput
+                    value={this.props.value}
                     style={[styles.input,this.props.style]}
                     placeholder={this.props.placeholder}
                     onChangeText={(txt)=>{this.props.onChangeText(txt)}}
@@ -21,8 +22,8 @@ const styles=StyleSheet.create({
     input:{
         height:50,
         width:'90%',
-        borderWidth:1,
-        borderRadius:5,
+        borderWidth:2,
+        borderRadius:4,
         paddingLeft:20,
         marginLeft:20,
         marginRight:20,

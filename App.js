@@ -41,8 +41,7 @@ const App=()=>{
 
               tabBarOptions={{
                 activeTintColor: '#000000',
-                inactiveTintColor: 'gray',
-                
+                inactiveTintColor: 'gray'
               }}
             >
               <Tab.Screen name="AddMovie" component={AddMovie} />

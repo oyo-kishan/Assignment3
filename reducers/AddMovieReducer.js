@@ -6,7 +6,17 @@ const initialState={
         genre: "Comedy",
         description: "Dark comedy (or Black Comedy) is defined by using attitudes",
         rating : "9",
-        id:  "ididididid"
+        id:  "firstid"
+    },
+    {
+        name : "the olympus has fallen",
+        year : "2015",
+        genre: "Action",
+        description: "Olympus Has Fallen is a 2013 American action thriller "+
+                      "film directed by Antoine Fuqua from a screenplay written by"+
+                      "Creighton Rothenberger and Katrin Benedikt. It is the first installment in the Has Fallen film series.",
+        rating : "7.9",
+        id:  "secondid"
     }
 ]
 }

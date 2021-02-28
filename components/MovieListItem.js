@@ -3,9 +3,11 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const MovieListItem = (props) => {
   const data = props.data;
-  console.log(data);
+  const index=props.index;
   return (
-    <TouchableOpacity>
+    <TouchableOpacity 
+      onPress={()=>props.onPress(index)}
+    >
       <View style={styles.root}>
 
         <View style={styles.firstsubroot}>

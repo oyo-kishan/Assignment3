@@ -38,10 +38,6 @@ const Table = (props) => {
            <Text style={styles.text}>{heading[2]}</Text>
         </TouchableOpacity>
 
-        
-
-       
-
       </View>
 
       <View style={styles.seperator}></View>
@@ -49,9 +45,10 @@ const Table = (props) => {
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => <UserListItem data={item} />}
+        renderItem={({item,index}) => <UserListItem data={item} index={index} />}
         ItemSeparatorComponent={(item) => (<View style={styles.seperator}></View>)}
         getItemLayout={(data,index)=>({length:50,offset:50*index,index})}
+        ListEmptyComponent={<Text style={[styles.loadingText]}>Loading ...</Text>}
       />
     </View>
   );
@@ -88,6 +85,15 @@ const styles = StyleSheet.create({
       fontSize: 18,
       paddingRight:5
     },
+    loadingText:{
+      fontSize:25,
+      fontFamily:'sans-serif',
+      fontWeight:'bold',
+      padding:20,
+      flex : 1,
+      alignContent:'center',
+      alignSelf:'center'
+  }
   });
 
   

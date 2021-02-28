@@ -97,14 +97,14 @@ const FetchUser = () => {
 
  return (
          <ScrollView nestedScrollEnabled>
-          <View style={styles.root}>
+
+            <View style={styles.root}>
             <TextInput
                 style={styles.searchInput}
                 onChangeText={(text)=>{setFilterText(text)}}
                 selectionColor="black"
                 placeholder="Search by name , email..."
             />
-            <Text style={styles.loadingText}>{loading?"Loading ...":""}</Text>
 
             <Table
                 heading={["Name","Email","Status"]}
@@ -145,13 +145,12 @@ const styles = StyleSheet.create({
   searchInput:{
       width:'90%',
       height:45,
-      borderRadius:8,
+      borderRadius:4,
       paddingLeft:16,
       borderWidth:2,
       borderColor:'black',
       marginTop:40,
-      shadowRadius:8,
-      shadowColor:'black'
+      marginBottom:20
     },
     paginationView:{
         height:50,
@@ -175,12 +174,6 @@ const styles = StyleSheet.create({
     paginationButtonText:{
         color:'white',
         fontWeight:'bold'
-    },
-    loadingText:{
-        fontSize:25,
-        fontFamily:'sans-serif',
-        fontWeight:'bold',
-        padding:20
     }
     
 });

@@ -1,15 +1,17 @@
 import React ,{useState}from 'react';
-import {StyleSheet, Animated, KeyboardAvoidingView, Alert, ScrollView} from 'react-native';
+import {StyleSheet, Animated, View, Alert} from 'react-native';
+import {useIsFocused} from '@react-navigation/native'
 
 import {useDispatch,useSelector} from 'react-redux';
 import addMovies from '../actions/AddMovie';
+import updateMovie from '../actions/UpdateMovie';
+
 
 
 import CustomButton from '../components/CustomButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import CustomInput from '../components/Input';
 import { useEffect } from 'react';
-
 
 const AnimatedInput=Animated.createAnimatedComponent(CustomInput);
 
@@ -20,19 +22,19 @@ const data = [
   ];
 
 
-
-
-
-const AddMovie=()=>{
+const AddMovie=({navigation,route})=>{
 
     const dispatch=useDispatch();
-    const [redata,setData]=useState(useSelector((state) => state.movieData.movies));
+    const isFocussed=useIsFocused();
 
+    const [buttonTitle,setButtonTitle]=useState("");
+    
     const [movieName,setMovieName]=useState("");
     const [movieYear,setMovieYear]=useState("");
     const [movieDescription,setMovieDescription]=useState("");
     const [movieRating,setMovieRating]=useState("");
     const [movieGenre,setMovieGenre]=useState("Action");
+    const[id,setId]=useState(null);
 
     const buttonAnimatedValue=useState(new Animated.Value(1))[0];
     const movieNameAnimation=useState(new Animated.Value(0))[0];
@@ -42,17 +44,72 @@ const AddMovie=()=>{
     const movieGenreAnimation=useState(new Animated.Value(0))[0];
 
 
+    useEffect(()=>{
+        if(isFocussed){
+            setButtonTitle("ADD MOVIE")
+        }
+        if(route.params!==undefined){
+            const obj=route.params;
+            console.log(obj);
+
+            setMovieName(obj.name);
+            setMovieYear(obj.year);
+            setMovieDescription(obj.description);
+            setMovieRating(obj.rating);
+            setMovieGenre(obj.genre);
+            setId(obj.id);
+            setButtonTitle("UPDATE MOVIE")
+     }
+    
+    },[isFocussed]);
+
     const addDataToStore=()=>{
+        console.log("inside ");
+        console.log(id);
+        if(id!==null){
+            updateMovieInStore();
+        }else{
+            addMovieInStore();
+        }
+
+        setMovieName("")
+        setMovieYear("")
+        setMovieGenre("Action")
+        setMovieDescription("")
+        setMovieRating("")
+        setId(null);
+        setButtonTitle("ADD MOVIE");
+        navigation.navigate("MovieList");
+
+    }
+
+    const addMovieInStore=()=>{
         dispatch(addMovies(
-        {
-            name: movieName,
-            year: movieYear,
-            genre: movieGenre,
-            description: movieDescription,
-            rating: movieRating,
-            id:  movieName.toString().concat(movieRating).concat(movieGenre.toString())
-        }));
-        alert("Action dispatched");
+            {
+                name: movieName,
+                year: movieYear,
+                genre: movieGenre,
+                description: movieDescription,
+                rating: movieRating,
+                id:  movieName.toString().concat(movieRating).concat(movieGenre.toString())
+            }));
+            alert("Movie added successfully");
+            
+    }
+
+    const updateMovieInStore=()=>{
+        dispatch(updateMovie(
+            {
+                name: movieName,
+                year: movieYear,
+                genre: movieGenre,
+                description: movieDescription,
+                rating: movieRating,
+                id: id
+            }));
+            
+            alert("Movie updated successfully");
+
     }
 
     const animatedStyle={
@@ -78,24 +135,6 @@ const AddMovie=()=>{
         opacity:animation
     }
  }
-    
-    const onPressIn=()=>{
-          Animated.spring(buttonAnimatedValue,{
-              toValue:.5,
-              friction:2,
-              tension:100,
-              useNativeDriver:true
-          }).start();
-      }
-
-      const onPressOut=()=>{
-          Animated.spring(buttonAnimatedValue,{
-              toValue:1,
-              tension:20,
-              friction:7,
-              useNativeDriver:true
-          }).start();
-      }
 
 
       useEffect(()=>{
@@ -119,16 +158,12 @@ const AddMovie=()=>{
                 toValue:1,
                 duration:200,
                 useNativeDriver:true
-            }),
-            // Animated.timing(movieGenreAnimation,{
-            //     toValue:1,
-            //     duration:200,
-            //     useNativeDriver:true
-            // })
+            })
+
           ]).start();
       },[]);
 
-    
+
       const movieNameAnimatedStyle=makeAnimationStyle(movieNameAnimation);
       const movieYearAnimatedStyle=makeAnimationStyle(movieYearAnimation);
       const movieDescriptionAnimatedStyle=makeAnimationStyle(movieDescriptionAnimation);
@@ -136,7 +171,7 @@ const AddMovie=()=>{
       const movieGenreAnimatedStyle=makeAnimationStyle(movieGenreAnimation);
 
     return (
-        <KeyboardAvoidingView 
+        <View 
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.root}
         >
@@ -144,29 +179,33 @@ const AddMovie=()=>{
                     placeholder="Movie Name"
                     onChangeText={(name)=>setMovieName(name)}
                     type="text"
+                    value={movieName}
                     style={movieNameAnimatedStyle}
                 />
                 <AnimatedInput
                     placeholder="Movie Year"
                     onChangeText={(year)=>setMovieYear(year)}
                     type="number"
+                    value={movieYear}
                     style={movieYearAnimatedStyle}
                 />
                 <AnimatedInput
                     placeholder="Description"
                     onChangeText={(description)=>setMovieDescription(description)}
                     type="text"
+                    value={movieDescription}
                     style={movieDescriptionAnimatedStyle}
                 />
                 <AnimatedInput
                     placeholder="Rating"
                     onChangeText={(rating)=>setMovieRating(rating)}
                     type="number"
+                    value={movieRating}
                     style={movieRatingAnimatedStyle}
                 />
                     <DropDownPicker
                         items={data}
-                        defaultValue="Action"
+                        defaultValue={movieGenre}
                         containerStyle={styles.dropdownbox}
                         onChangeItem={(item) =>setMovieGenre(item.value)}   
                     />                
@@ -175,11 +214,11 @@ const AddMovie=()=>{
                     onPress={()=>{addDataToStore()}}
                     onPressIn={()=>{}}
                     onPressOut={()=>{}}
-                    title="Click me"
+                    title={buttonTitle}
                     animatedStyle={animatedStyle}
                 />
                
-        </KeyboardAvoidingView>
+        </View>
         
     )
 }
