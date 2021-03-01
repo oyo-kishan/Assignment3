@@ -37,7 +37,7 @@ const MovieList=({navigation})=>{
               hardwareAccelerated={true}
               transparent={true}
               onRequestClose={()=>{setModalVisible(false)}}>
-
+                  
               <CustomModal
                  onEditClicked={()=>{editItem()}}
                  onDeleteClicked={()=>{deleteItem()}}

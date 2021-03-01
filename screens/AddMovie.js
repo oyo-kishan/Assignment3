@@ -48,7 +48,10 @@ const AddMovie=({navigation,route})=>{
         if(isFocussed){
             setButtonTitle("ADD MOVIE")
         }
-        if(route.params!==undefined){
+        console.log("route.params");
+        console.log(typeof route.params);
+        
+        if( typeof (route.params)!=="undefined"){
             const obj=route.params;
             console.log(obj);
 
@@ -60,30 +63,31 @@ const AddMovie=({navigation,route})=>{
             setId(obj.id);
             setButtonTitle("UPDATE MOVIE")
      }
+     else{
+            setMovieName("")
+            setMovieYear("")
+            setMovieGenre("Action")
+            setMovieDescription("")
+            setMovieRating("")
+            setId(null);
+            setButtonTitle("ADD MOVIE");
+     }
     
     },[isFocussed]);
 
     const addDataToStore=()=>{
-        console.log("inside ");
-        console.log(id);
+
         if(id!==null){
             updateMovieInStore();
         }else{
             addMovieInStore();
         }
-
-        setMovieName("")
-        setMovieYear("")
-        setMovieGenre("Action")
-        setMovieDescription("")
-        setMovieRating("")
-        setId(null);
-        setButtonTitle("ADD MOVIE");
         navigation.navigate("MovieList");
 
     }
 
     const addMovieInStore=()=>{
+
         dispatch(addMovies(
             {
                 name: movieName,
@@ -94,10 +98,11 @@ const AddMovie=({navigation,route})=>{
                 id:  movieName.toString().concat(movieRating).concat(movieGenre.toString())
             }));
             alert("Movie added successfully");
-            
     }
 
+
     const updateMovieInStore=()=>{
+
         dispatch(updateMovie(
             {
                 name: movieName,
@@ -107,9 +112,7 @@ const AddMovie=({navigation,route})=>{
                 rating: movieRating,
                 id: id
             }));
-            
             alert("Movie updated successfully");
-
     }
 
     const animatedStyle={

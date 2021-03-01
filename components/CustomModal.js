@@ -3,27 +3,27 @@ import {View,Text,StyleSheet, TouchableOpacity} from 'react-native';
 
 const CustomModal=(props)=>{
     return (
+
         <View style={styles.root}>
             <View style={styles.modal}>
+                <Text style={styles.text}>What do you want ?</Text>
+                <View style={styles.buttonContainer}>
 
-                <TouchableOpacity onPress={()=>{props.onEditClicked()}}>
-                    <View style={[styles.button,{marginTop:4}]}>
-                        <Text style={styles.buttontext}>Edit Item</Text>
-                    </View>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{props.onEditClicked()}} style={styles.button}>
+                        <View style={{flex : 1,justifyContent:'center'}}>
+                           <Text style={styles.buttonText}>Edit </Text>
+                        </View>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={()=>{props.onDeleteClicked()}}>
-                    <View style={[styles.button,{marginTop:10}]}>
-                            <Text style={styles.buttontext}>Delete Item</Text>
-                    </View>
-                </TouchableOpacity>
+                    <View style={{backgroundColor:'black' ,width : 1,height:45}}></View>
 
-                <TouchableOpacity onPress={()=>{props.onNoneClicked()}}>
-                    <View style={[styles.button,{marginTop:10}]}>
-                            <Text style={styles.buttontext}>None</Text>
-                    </View>
-                </TouchableOpacity>
-                
+                    <TouchableOpacity onPress={()=>{props.onDeleteClicked()}} style={styles.button}>
+                        <View style={{flex : 1,justifyContent:'center'}}>
+                           <Text style={styles.buttonText}>Delete</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                </View>
             </View>
         </View>
     )
@@ -37,27 +37,39 @@ const styles=StyleSheet.create({
         alignItems:'center',
     },
     modal:{
-        height:240,
+        height:100,
         width:'80%',
         elevation:10,
-        borderRadius:5,
+        borderRadius:10,
         backgroundColor:'white',
-        justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        overflow:'hidden'
+
     },
-    button:{
-        height:50,
-        backgroundColor:"skyblue",
-        padding:12,
-        borderRadius:5,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    buttontext : {
-        width:220,
-        fontSize:18,
+    buttonContainer : {
+        position:'absolute',
+        bottom:0,
+        height:45, 
+        width : '100%',
+        flexDirection:'row',
+        overflow:'hidden',
+        backgroundColor:'#f7f5f5'
+     },
+     text:{
+         position:'absolute',
+         top : 10,
+         fontSize:20,
+         fontWeight:'600'
+     },
+     button :{
+         flex:1,
+         justifyContent:'center',
+         alignItems:'center',
+     },
+     buttonText:{
+        textAlign:'center',
         fontWeight:'bold',
-        textAlign:'center'
+        fontSize:20
     }
 })
 
